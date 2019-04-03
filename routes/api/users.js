@@ -57,6 +57,23 @@ router.post('/', (req, res, next) => {
         dateCreated: req.body.dateCreated,
         pendingTasks: req.body.pendingTasks,
     });
+    if (req.body.pendingTasks.length > 0) {
+        req.body.pendingTasks.map(id => {
+            Task
+                .findById(id)
+                .then(task => {
+                    if (!task) {
+                        return res.status(404).json({
+                            message: "Failed",
+                            data: "No Task Found"
+                        });
+                    }
+                    task.assignedUser = user._id;
+                    task.save();
+
+                })
+        });
+    }
     user
         .save()
         .then(result => {
