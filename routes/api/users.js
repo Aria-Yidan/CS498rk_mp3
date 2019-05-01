@@ -57,7 +57,7 @@ router.post('/', (req, res, next) => {
         dateCreated: req.body.dateCreated,
         pendingTasks: req.body.pendingTasks,
     });
-    if (req.body.pendingTasks.length > 0) {
+    if (req.body.pendingTasks && req.body.pendingTasks.length > 0) {
         req.body.pendingTasks.map(id => {
             Task
                 .findById(id)
